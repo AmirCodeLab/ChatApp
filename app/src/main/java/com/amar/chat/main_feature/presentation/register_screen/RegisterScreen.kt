@@ -1,0 +1,100 @@
+package com.amar.chat.main_feature.presentation.register_screen
+
+import android.content.Context
+import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.amar.chat.R
+import com.amar.chat.main_feature.presentation.register_screen.components.RegisterButton
+import com.amar.chat.main_feature.presentation.register_screen.components.RegisterField
+import com.amar.chat.ui.theme.DarkOrange
+
+@Composable
+@Preview(showSystemUi = true)
+fun RegisterScreen(modifier: Modifier = Modifier) {
+
+    val number = remember { mutableStateOf("") }
+    val context = LocalContext.current
+
+    Column (
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+
+        Image(
+            modifier = Modifier.size(92.dp),
+            painter = painterResource(id = R.drawable.img_splash),
+            contentDescription = "Splash Screen",
+        )
+
+        Spacer(Modifier.height(18.dp))
+
+        Text(
+            text = "Register here",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+        )
+
+        Spacer(Modifier.height(4.dp))
+
+        Text(
+            text = "Chat App needs your phone number to continue",
+            fontSize = 14.sp,
+        )
+
+        Spacer(Modifier.height(58.dp))
+
+        RegisterField(
+            modifier = Modifier
+                .padding(horizontal = 14.dp)
+                .fillMaxWidth(),
+            number = number.value,
+            onValueChange = {
+                if (it.length <= 11) number.value = it
+            }
+        )
+
+        Spacer(Modifier.height(22.dp))
+
+        RegisterButton (
+            modifier = Modifier
+                .padding(horizontal = 14.dp)
+                .fillMaxWidth()
+        ) {
+            Toast.makeText(context, "Number: ${number.value}", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+}
