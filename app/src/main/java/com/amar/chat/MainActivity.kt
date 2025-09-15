@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.amar.chat.main_feature.presentation.register_screen.RegisterScreen
+import com.amar.chat.main_feature.presentation.splash_screen.SplashScreen
 import com.amar.chat.ui.theme.ChatAppFireBaseTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,28 +22,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             ChatAppFireBaseTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    RegisterScreen(Modifier.padding(innerPadding))
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ChatAppFireBaseTheme {
-        Greeting("Android")
     }
 }
