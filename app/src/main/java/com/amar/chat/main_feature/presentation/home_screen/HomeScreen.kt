@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.amar.chat.R
 import com.amar.chat.main_feature.domain.entities.ItemChatList
+import com.amar.chat.main_feature.presentation.home_screen.components.BottomNavigation
 import com.amar.chat.main_feature.presentation.home_screen.components.HomeChatItem
 import com.amar.chat.main_feature.presentation.home_screen.components.HomeFloatingButton
 import com.amar.chat.main_feature.presentation.home_screen.components.HomeHeader
@@ -26,7 +27,8 @@ fun HomeScreen() {
     val context = LocalContext.current
 
     Scaffold(
-        floatingActionButton = { HomeFloatingButton {  } }
+        floatingActionButton = { HomeFloatingButton { } },
+        bottomBar = { BottomNavigation() }
     ) {
         Column(
             modifier = Modifier.padding(it)
@@ -41,7 +43,7 @@ fun HomeScreen() {
             )
 
             LazyColumn {
-                items(getChatData()) {item ->
+                items(getChatData()) { item ->
                     HomeChatItem(chat = item) { chatItem ->
                         Toast.makeText(context, chatItem.name, Toast.LENGTH_SHORT).show()
                     }

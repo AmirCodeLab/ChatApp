@@ -32,7 +32,7 @@ fun HomeFloatingButton(
     ) {
         Image(
             modifier = Modifier.size(26.dp),
-            painter = painterResource(R.drawable.img_chat),
+            painter = painterResource(R.drawable.img_add_chat),
             contentDescription = "",
             colorFilter = ColorFilter.tint(Color.White)
         )
