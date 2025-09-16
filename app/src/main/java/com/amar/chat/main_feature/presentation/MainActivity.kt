@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.amar.chat.main_feature.presentation.home_screen.HomeScreen
+import com.amar.chat.main_feature.presentation.update_screen.UpdateScreen
 import com.amar.chat.ui.theme.ChatAppFireBaseTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ChatAppFireBaseTheme {
                 Scaffold(modifier = Modifier.Companion.fillMaxSize()) { innerPadding ->
-                    HomeScreen()
+                    UpdateScreen()
                 }
             }
         }

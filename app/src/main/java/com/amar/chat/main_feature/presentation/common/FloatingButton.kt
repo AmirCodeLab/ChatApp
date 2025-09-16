@@ -1,4 +1,4 @@
-package com.amar.chat.main_feature.presentation.home_screen.components
+package com.amar.chat.main_feature.presentation.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
@@ -15,14 +15,15 @@ import com.amar.chat.ui.theme.DarkOrange
 
 @Preview
 @Composable
-private fun PreviewHomeFloatingButton() {
-    HomeFloatingButton()
+private fun PreviewFloatingButton() {
+    FloatingButton()
 }
 
 @Composable
-fun HomeFloatingButton(
+fun FloatingButton(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+    icon: Int = R.drawable.img_add_chat,
+    onClick: () -> Unit = {},
 ) {
     FloatingActionButton(
         modifier = modifier.size(54.dp),
@@ -32,7 +33,7 @@ fun HomeFloatingButton(
     ) {
         Image(
             modifier = Modifier.size(26.dp),
-            painter = painterResource(R.drawable.img_add_chat),
+            painter = painterResource(icon),
             contentDescription = "",
             colorFilter = ColorFilter.tint(Color.White)
         )
