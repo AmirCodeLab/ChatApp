@@ -16,7 +16,7 @@ import com.amar.chat.R
 import com.amar.chat.main_feature.domain.entities.ItemChatList
 import com.amar.chat.main_feature.presentation.home_screen.components.BottomNavigation
 import com.amar.chat.main_feature.presentation.home_screen.components.HomeChatItem
-import com.amar.chat.main_feature.presentation.common.FloatingButton
+import com.amar.chat.main_feature.presentation._common.FloatingButton
 import com.amar.chat.main_feature.presentation.home_screen.components.HomeHeader
 import com.amar.chat.ui.theme.LightGray
 

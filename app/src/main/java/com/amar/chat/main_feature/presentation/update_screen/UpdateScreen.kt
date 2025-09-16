@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.amar.chat.R
 import com.amar.chat.main_feature.domain.entities.ItemStatusList
-import com.amar.chat.main_feature.presentation.common.FloatingButton
+import com.amar.chat.main_feature.presentation._common.FloatingButton
 import com.amar.chat.main_feature.presentation.update_screen.components.ItemMyStatus
 import com.amar.chat.main_feature.presentation.update_screen.components.ItemUserStatus
 import com.amar.chat.main_feature.presentation.update_screen.components.UpdateHeader

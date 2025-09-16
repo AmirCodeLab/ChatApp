@@ -1,4 +1,4 @@
-package com.amar.chat.main_feature.presentation.common
+package com.amar.chat.main_feature.presentation._common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
