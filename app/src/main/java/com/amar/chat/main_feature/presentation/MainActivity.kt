@@ -1,18 +1,13 @@
-package com.amar.chat
+package com.amar.chat.main_feature.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.amar.chat.main_feature.presentation.register_screen.RegisterScreen
-import com.amar.chat.main_feature.presentation.splash_screen.SplashScreen
+import com.amar.chat.main_feature.presentation.home_screen.HomeScreen
 import com.amar.chat.ui.theme.ChatAppFireBaseTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,8 +16,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ChatAppFireBaseTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    RegisterScreen(Modifier.padding(innerPadding))
+                Scaffold(modifier = Modifier.Companion.fillMaxSize()) { innerPadding ->
+                    HomeScreen()
                 }
             }
         }
