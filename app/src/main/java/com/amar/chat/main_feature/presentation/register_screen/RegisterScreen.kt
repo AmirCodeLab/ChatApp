@@ -1,6 +1,5 @@
 package com.amar.chat.main_feature.presentation.register_screen
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,19 +24,23 @@ import androidx.compose.ui.unit.sp
 import com.amar.chat.R
 import com.amar.chat.main_feature.presentation.register_screen.components.RegisterButton
 import com.amar.chat.main_feature.presentation.register_screen.components.RegisterField
+import com.amar.chat.utils.Utils
 
 @Composable
 @Preview(showSystemUi = true)
-fun RegisterScreen(modifier: Modifier = Modifier) {
+fun RegisterScreen(
+    modifier: Modifier = Modifier,
+    onRegisterClick: (String) -> Unit = {}
+) {
 
     val number = remember { mutableStateOf("") }
     val context = LocalContext.current
 
-    Column (
+    Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
 
         Image(
             modifier = Modifier.size(92.dp),
@@ -74,12 +77,16 @@ fun RegisterScreen(modifier: Modifier = Modifier) {
 
         Spacer(Modifier.height(22.dp))
 
-        RegisterButton (
+        RegisterButton(
             modifier = Modifier
                 .padding(horizontal = 14.dp)
                 .fillMaxWidth()
         ) {
-            Toast.makeText(context, "Number: ${number.value}", Toast.LENGTH_SHORT).show()
+            if (number.value.length < 11) {
+                Utils.showToast(context, "Enter valid number")
+                return@RegisterButton
+            }
+            onRegisterClick(number.value)
         }
 
     }

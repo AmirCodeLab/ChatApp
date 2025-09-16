@@ -10,24 +10,37 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.amar.chat.R
+import com.amar.chat.main_feature.presentation._navigation.Routes
+import com.amar.chat.main_feature.presentation.splash_screen.components.LottieAnimationView
+import kotlinx.coroutines.delay
 
 @Composable
-@Preview(showSystemUi = true)
-fun SplashScreen(modifier: Modifier = Modifier) {
+fun SplashScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
+
+    LaunchedEffect(Unit) {
+        delay(3000)
+        navController.navigate(Routes.RegisterScreen) {
+            popUpTo<Routes.SplashScreen> { inclusive = true }
+        }
+    }
 
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-        Column (
+        Column(
             modifier = Modifier
                 .align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -46,6 +59,12 @@ fun SplashScreen(modifier: Modifier = Modifier) {
                 fontFamily = FontFamily.SansSerif
             )
         }
+
+        LottieAnimationView(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 32.dp),
+        )
 
         Text(
             modifier = Modifier
