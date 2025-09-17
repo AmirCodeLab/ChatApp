@@ -6,6 +6,8 @@ plugins {
 
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -63,6 +65,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // FireBase
+    implementation(libs.firebase.database)
 
     // Material Icons
     implementation("androidx.compose.material:material-icons-extended:1.7.8")

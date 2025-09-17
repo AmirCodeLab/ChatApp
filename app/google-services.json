@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "194455326168",
+    "project_id": "chatappfirebase-dbeb1",
+    "storage_bucket": "chatappfirebase-dbeb1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194455326168:android:c0e6bdebf49cc22370f6ad",
+        "android_client_info": {
+          "package_name": "com.amar.chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_Ntkn48Qt1CLH_dGWg3tirGzd92On7Ec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
