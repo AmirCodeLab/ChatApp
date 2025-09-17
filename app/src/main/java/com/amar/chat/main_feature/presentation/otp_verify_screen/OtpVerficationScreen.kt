@@ -1,7 +1,6 @@
-package com.amar.chat.main_feature.presentation.register_screen
+package com.amar.chat.main_feature.presentation.otp_verify_screen
 
-import android.annotation.SuppressLint
-import android.app.Activity
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,23 +29,22 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.amar.chat.R
 import com.amar.chat.main_feature.presentation._states.PhoneAuthState
 import com.amar.chat.main_feature.presentation._view_model.PhoneAuthViewModel
-import com.amar.chat.main_feature.presentation.register_screen.components.RegisterButton
-import com.amar.chat.main_feature.presentation.register_screen.components.RegisterField
+import com.amar.chat.main_feature.presentation.otp_verify_screen.components.OtpVerifyButton
+import com.amar.chat.main_feature.presentation.otp_verify_screen.components.OtpVerifyField
 import com.amar.chat.utils.Utils
 
-@SuppressLint("ContextCastToActivity")
 @Composable
 @Preview(showSystemUi = true)
-fun RegisterScreen(
+fun OtpVerificationScreen(
     modifier: Modifier = Modifier,
-    viewModel: PhoneAuthViewModel = hiltViewModel(),
-    onNavigate: (String) -> Unit = {}
+    verificationId: String = "",
+    viewModel: PhoneAuthViewModel = hiltViewModel()
 ) {
 
-    val number = remember { mutableStateOf("+92") }
-    val context = LocalContext.current as Activity
+    val otp = remember { mutableStateOf("") }
+    val context = LocalContext.current
 
-    val authState by viewModel.authState.collectAsState()
+    val state by viewModel.authState.collectAsState()
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -57,13 +55,13 @@ fun RegisterScreen(
         Image(
             modifier = Modifier.size(92.dp),
             painter = painterResource(id = R.drawable.img_splash),
-            contentDescription = "Splash Screen",
+            contentDescription = "",
         )
 
         Spacer(Modifier.height(18.dp))
 
         Text(
-            text = "Register here",
+            text = "Verify Number",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
         )
@@ -71,55 +69,50 @@ fun RegisterScreen(
         Spacer(Modifier.height(4.dp))
 
         Text(
-            text = "Chat App needs your phone number to continue",
+            text = "Chat App needs to verify your phone number",
             fontSize = 14.sp,
         )
 
         Spacer(Modifier.height(58.dp))
 
-        RegisterField(
+        OtpVerifyField(
             modifier = Modifier
                 .padding(horizontal = 14.dp)
                 .fillMaxWidth(),
-            number = number.value,
+            number = otp.value,
             onValueChange = {
-                if (it.length <= 13) number.value = it
+                if (it.length <= 6) otp.value = it
             }
         )
 
         Spacer(Modifier.height(22.dp))
 
-        RegisterButton(
+        OtpVerifyButton (
             modifier = Modifier
                 .padding(horizontal = 14.dp)
                 .fillMaxWidth()
         ) {
-            if (number.value.length < 13) {
-                Utils.showToast(context, "Enter valid number")
-                return@RegisterButton
+            if (otp.value.length < 6) {
+                Utils.showToast(context, "Enter valid OTP")
+                return@OtpVerifyButton
             }
-            viewModel.sendOtp(context, number.value)
+            Toast.makeText(context, verificationId, Toast.LENGTH_SHORT).show()
+            viewModel.verifyCode(otp.value, verificationId)
         }
 
         Spacer(Modifier.height(22.dp))
 
-        when (authState) {
-            PhoneAuthState.Idle -> {}
-            PhoneAuthState.Loading -> {
-                CircularProgressIndicator()
+        when (state) {
+            is PhoneAuthState.Loading -> CircularProgressIndicator()
+            is PhoneAuthState.Success -> {
+                val user = (state as PhoneAuthState.Success).user
+                Toast.makeText(context, "moving to home", Toast.LENGTH_SHORT).show()
             }
-
             is PhoneAuthState.Error -> {
-                Text("Error: ${(authState as PhoneAuthState.Error).message}")
-            }
-
-            is PhoneAuthState.OtpSent -> {
-                val verificationId = (authState as PhoneAuthState.OtpSent).verificationId
-                onNavigate(verificationId)
+                Text("Error: ${(state as PhoneAuthState.Error).message}")
             }
             else -> {}
         }
-
     }
 
 }

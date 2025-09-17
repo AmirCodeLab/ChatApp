@@ -67,6 +67,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // FireBase
+    implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
 
     // Material Icons
