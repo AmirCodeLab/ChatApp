@@ -1,6 +1,5 @@
 package com.amar.chat.main_feature.presentation.otp_verify_screen
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,7 +37,8 @@ import com.amar.chat.utils.Utils
 fun OtpVerificationScreen(
     modifier: Modifier = Modifier,
     verificationId: String = "",
-    viewModel: PhoneAuthViewModel = hiltViewModel()
+    viewModel: PhoneAuthViewModel = hiltViewModel(),
+    onNavigate: () -> Unit = {}
 ) {
 
     val otp = remember { mutableStateOf("") }
@@ -96,7 +96,6 @@ fun OtpVerificationScreen(
                 Utils.showToast(context, "Enter valid OTP")
                 return@OtpVerifyButton
             }
-            Toast.makeText(context, verificationId, Toast.LENGTH_SHORT).show()
             viewModel.verifyCode(otp.value, verificationId)
         }
 
@@ -106,7 +105,7 @@ fun OtpVerificationScreen(
             is PhoneAuthState.Loading -> CircularProgressIndicator()
             is PhoneAuthState.Success -> {
                 val user = (state as PhoneAuthState.Success).user
-                Toast.makeText(context, "moving to home", Toast.LENGTH_SHORT).show()
+                onNavigate.invoke()
             }
             is PhoneAuthState.Error -> {
                 Text("Error: ${(state as PhoneAuthState.Error).message}")

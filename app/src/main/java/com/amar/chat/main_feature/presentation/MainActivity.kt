@@ -14,6 +14,7 @@ import com.amar.chat.main_feature.presentation._navigation.Routes
 import com.amar.chat.main_feature.presentation.calls_screen.CallScreen
 import com.amar.chat.main_feature.presentation.home_screen.HomeScreen
 import com.amar.chat.main_feature.presentation.otp_verify_screen.OtpVerificationScreen
+import com.amar.chat.main_feature.presentation.profile_screen.ProfileSetScreen
 import com.amar.chat.main_feature.presentation.register_screen.RegisterScreen
 import com.amar.chat.main_feature.presentation.splash_screen.SplashScreen
 import com.amar.chat.main_feature.presentation.update_screen.UpdateScreen
@@ -51,7 +52,15 @@ class MainActivity : ComponentActivity() {
                             arguments = listOf(navArgument("verificationId") { type = NavType.StringType })
                         ) {
                             val id = it.arguments?.getString("verificationId") ?: ""
-                            OtpVerificationScreen(verificationId = id)
+                            OtpVerificationScreen(verificationId = id) {
+                                navController.navigate(Routes.ProfileSetScreen.route)
+                            }
+                        }
+
+                        composable(route = Routes.ProfileSetScreen.route) {
+                            ProfileSetScreen {
+                                navController.navigate(Routes.HomeScreen.route)
+                            }
                         }
 
                         composable(route = Routes.HomeScreen.route) {
