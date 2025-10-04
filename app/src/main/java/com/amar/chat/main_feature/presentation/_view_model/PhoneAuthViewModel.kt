@@ -120,10 +120,11 @@ class PhoneAuthViewModel @Inject constructor(
         signInWithCredential(credential)
     }
 
-    fun saveProfile(userId: String, name: String, status: String, image: Bitmap?) {
+    fun saveProfile(userId: String, phoneNumber: String, name: String, status: String, image: Bitmap?) {
         val encodeImage = image?.let { convertBitmapToString(it) }
         val phoneAuthUser = PhoneAuthUser(
             userId = userId,
+            phoneNumber = phoneNumber,
             userName = name,
             status = status,
             profileImage = encodeImage

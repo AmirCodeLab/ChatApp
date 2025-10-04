@@ -164,7 +164,14 @@ fun ProfileSetScreen(
         Spacer(Modifier.height(16.dp))
 
         ProfileSetButton {
-            viewModel.saveProfile(userId, name.value, status.value, bitmapImage.value)
+            viewModel.saveProfile(
+                userId = userId,
+                phoneNumber = phoneNumber,
+                name = name.value,
+                status = status.value,
+                image = bitmapImage.value
+            )
+
             onNavigate()
         }
 
