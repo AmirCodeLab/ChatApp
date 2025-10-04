@@ -29,7 +29,7 @@ fun FloatingButton(
         modifier = modifier.size(54.dp),
         containerColor = DarkOrange,
         contentColor = Color.White,
-        onClick = { onClick }
+        onClick = { onClick.invoke() }
     ) {
         Image(
             modifier = Modifier.size(26.dp),
