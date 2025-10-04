@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.amar.chat.main_feature.presentation._navigation.Routes
 import com.amar.chat.main_feature.presentation.calls_screen.CallScreen
+import com.amar.chat.main_feature.presentation.chat_screen.ChatScreen
 import com.amar.chat.main_feature.presentation.home_screen.HomeScreen
 import com.amar.chat.main_feature.presentation.otp_verify_screen.OtpVerificationScreen
 import com.amar.chat.main_feature.presentation.profile_screen.ProfileSetScreen
@@ -64,7 +65,17 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = Routes.HomeScreen.route) {
-                            HomeScreen()
+                            HomeScreen() {
+                                navController.navigate("${Routes.ChatScreen.route}/${it}")
+                            }
+                        }
+
+                        composable(
+                            route = "${Routes.ChatScreen.route}/{phoneNumber}",
+                            arguments = listOf(navArgument("phoneNumber") { type = NavType.StringType })
+                        ) {
+                            val phoneNumber = it.arguments?.getString("phoneNumber") ?: ""
+                            ChatScreen(phoneNumber = phoneNumber)
                         }
 
                         composable(route = Routes.UpdateScreen.route) {

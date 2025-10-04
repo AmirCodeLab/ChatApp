@@ -6,6 +6,7 @@ sealed class Routes(val route: String) {
     object OtpVerificationScreen : Routes("otp_verification_screen")
     object ProfileSetScreen : Routes("profile_set_screen")
     object HomeScreen : Routes("home_screen")
+    object ChatScreen : Routes("chat_screen")
     object UpdateScreen : Routes("update_screen")
     object CallsScreen : Routes("call_screen")
 }
