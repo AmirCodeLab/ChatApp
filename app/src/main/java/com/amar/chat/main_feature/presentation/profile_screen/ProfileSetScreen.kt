@@ -5,8 +5,6 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.util.Log
-import android.widget.Space
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -36,7 +34,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.amar.chat.R
 import com.amar.chat.main_feature.presentation._view_model.PhoneAuthViewModel
@@ -44,12 +41,13 @@ import com.amar.chat.main_feature.presentation.profile_screen.components.Profile
 import com.amar.chat.main_feature.presentation.profile_screen.components.ProfileTextField
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 @Preview(showSystemUi = true)
 fun ProfileSetScreen(
     modifier: Modifier = Modifier,
-    viewModel: PhoneAuthViewModel = hiltViewModel(),
+    viewModel: PhoneAuthViewModel = koinViewModel(),
     onNavigate: () -> Unit = {}
 ) {
 

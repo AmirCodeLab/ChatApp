@@ -24,20 +24,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.amar.chat.R
 import com.amar.chat.main_feature.presentation._states.PhoneAuthState
 import com.amar.chat.main_feature.presentation._view_model.PhoneAuthViewModel
 import com.amar.chat.main_feature.presentation.otp_verify_screen.components.OtpVerifyButton
 import com.amar.chat.main_feature.presentation.otp_verify_screen.components.OtpVerifyField
 import com.amar.chat.utils.Utils
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 @Preview(showSystemUi = true)
 fun OtpVerificationScreen(
     modifier: Modifier = Modifier,
     verificationId: String = "",
-    viewModel: PhoneAuthViewModel = hiltViewModel(),
+    viewModel: PhoneAuthViewModel = koinViewModel(),
     onNavigate: () -> Unit = {}
 ) {
 

@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.amar.chat.R
 import com.amar.chat.main_feature.domain.entities.ItemChatList
 import com.amar.chat.main_feature.presentation._common.FloatingButton
@@ -29,11 +28,12 @@ import com.amar.chat.main_feature.presentation.home_screen.components.HomeChatIt
 import com.amar.chat.main_feature.presentation.home_screen.components.HomeHeader
 import com.amar.chat.ui.theme.LightGray
 import com.google.firebase.auth.FirebaseAuth
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 @Preview(showSystemUi = true)
 fun HomeScreen(
-    baseViewModel: BaseViewModel = hiltViewModel(),
+    baseViewModel: BaseViewModel = koinViewModel(),
     onNavigate: (String) -> Unit = {}
 ) {
 

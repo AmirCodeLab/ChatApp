@@ -16,15 +16,12 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.FirebaseDatabase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.io.ByteArrayOutputStream
 import java.util.concurrent.TimeUnit
 
-@HiltViewModel
-class PhoneAuthViewModel @Inject constructor(
+class PhoneAuthViewModel(
     private val firebaseAuth: FirebaseAuth,
     private val dataBase: FirebaseDatabase,
     private val sharedPref: SharedPref
@@ -87,7 +84,7 @@ class PhoneAuthViewModel @Inject constructor(
                     )
 
                     sharedPref.isLogin = true
-                    sharedPref.userName = user?.displayName  ?: ""
+                    sharedPref.userName = user?.displayName ?: ""
                     _authState.value = PhoneAuthState.Success(phoneAuthUser)
                     fetchUserProfile(user?.uid ?: "")
                 } else {

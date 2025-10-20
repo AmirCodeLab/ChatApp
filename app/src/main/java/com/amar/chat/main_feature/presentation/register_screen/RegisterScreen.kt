@@ -26,20 +26,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.amar.chat.R
 import com.amar.chat.main_feature.presentation._states.PhoneAuthState
 import com.amar.chat.main_feature.presentation._view_model.PhoneAuthViewModel
 import com.amar.chat.main_feature.presentation.register_screen.components.RegisterButton
 import com.amar.chat.main_feature.presentation.register_screen.components.RegisterField
 import com.amar.chat.utils.Utils
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("ContextCastToActivity")
 @Composable
 @Preview(showSystemUi = true)
 fun RegisterScreen(
     modifier: Modifier = Modifier,
-    viewModel: PhoneAuthViewModel = hiltViewModel(),
+    viewModel: PhoneAuthViewModel = koinViewModel(),
     onNavigate: (String) -> Unit = {}
 ) {
 
