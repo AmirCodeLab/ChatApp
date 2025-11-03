@@ -22,7 +22,9 @@ import androidx.navigation.NavController
 import com.amar.chat.R
 import com.amar.chat.main_feature.presentation._navigation.Routes
 import com.amar.chat.main_feature.presentation.splash_screen.components.LottieAnimationView
+import com.amar.chat.utils.SharedPref
 import kotlinx.coroutines.delay
+import org.koin.compose.koinInject
 
 @Composable
 fun SplashScreen(
@@ -30,9 +32,13 @@ fun SplashScreen(
     modifier: Modifier = Modifier
 ) {
 
+    val sharedPref: SharedPref = koinInject()
+
     LaunchedEffect(Unit) {
         delay(3000)
-        navController.navigate(Routes.RegisterScreen.route) {
+        navController.navigate(
+            if(sharedPref.isLogin) Routes.HomeScreen.route else Routes.RegisterScreen.route
+        ) {
             popUpTo(route = Routes.SplashScreen.route) { inclusive = true }
         }
     }
