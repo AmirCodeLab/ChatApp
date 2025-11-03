@@ -47,14 +47,15 @@ import org.koin.androidx.compose.koinViewModel
 @Preview(showSystemUi = true)
 fun ProfileSetScreen(
     modifier: Modifier = Modifier,
-    viewModel: PhoneAuthViewModel = koinViewModel(),
     onNavigate: () -> Unit = {}
 ) {
 
+    val viewModel: PhoneAuthViewModel = koinViewModel()
+
     val name = remember { mutableStateOf("") }
     val status = remember { mutableStateOf("") }
-    val profileImageUri = remember { mutableStateOf<Uri?>(null) }
     val bitmapImage = remember { mutableStateOf<Bitmap?>(null) }
+    val profileImageUri = remember { mutableStateOf<Uri?>(null) }
 
     val userId = Firebase.auth.currentUser?.uid ?: ""
     val phoneNumber = Firebase.auth.currentUser?.phoneNumber ?: ""
@@ -130,7 +131,7 @@ fun ProfileSetScreen(
         Text(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            text = phoneNumber,
+            text = "phoneNumber",
         )
 
         Spacer(Modifier.height(16.dp))
@@ -161,15 +162,18 @@ fun ProfileSetScreen(
 
         Spacer(Modifier.height(16.dp))
 
-        ProfileSetButton {
+        ProfileSetButton(
+            modifier = Modifier
+                .padding(horizontal = 14.dp)
+                .fillMaxWidth()
+        ) {
             viewModel.saveProfile(
                 userId = userId,
                 phoneNumber = phoneNumber,
                 name = name.value,
-                status = status.value,
+                about = status.value,
                 image = bitmapImage.value
             )
-
             onNavigate()
         }
 
