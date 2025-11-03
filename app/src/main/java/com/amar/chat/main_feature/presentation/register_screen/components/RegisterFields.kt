@@ -11,6 +11,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,26 +21,30 @@ import com.amar.chat.ui.theme.DarkOrange
 @Preview(showBackground = true)
 private fun PreviewRegisterField() {
     RegisterField(
-        number = "1234", onValueChange = {}
+        label = "Input Field",
+        inputValue = "Enter Value",
+        imageVector = Icons.Default.Phone,
+        keyboardType = KeyboardType.Phone,
     )
 }
 
 @Composable
 fun RegisterField(
     modifier: Modifier = Modifier,
-    number: String,
-    onValueChange: (String) -> Unit,
-    label: String = "Phone Number",
-    keyboardType: KeyboardType = KeyboardType.Phone
+    label: String,
+    inputValue: String,
+    imageVector: ImageVector,
+    keyboardType: KeyboardType,
+    onValueChange: (String) -> Unit = {},
 ) {
     OutlinedTextField(
         modifier = modifier,
-        value = number,
+        value = inputValue,
         shape = RoundedCornerShape(10.dp),
         onValueChange = { onValueChange(it) },
         leadingIcon = {
             Icon(
-                imageVector = Icons.Default.Phone, contentDescription = label
+                imageVector = imageVector, contentDescription = label
             )
         },
         label = {
