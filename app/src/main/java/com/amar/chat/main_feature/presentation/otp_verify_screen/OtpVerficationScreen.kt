@@ -37,14 +37,14 @@ import org.koin.androidx.compose.koinViewModel
 fun OtpVerificationScreen(
     modifier: Modifier = Modifier,
     verificationId: String = "",
-    viewModel: PhoneAuthViewModel = koinViewModel(),
     onNavigate: () -> Unit = {}
 ) {
 
+    val viewModel: PhoneAuthViewModel = koinViewModel()
+    val uiState by viewModel.authState.collectAsState()
+
     val otp = remember { mutableStateOf("") }
     val context = LocalContext.current
-
-    val state by viewModel.authState.collectAsState()
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -101,15 +101,13 @@ fun OtpVerificationScreen(
 
         Spacer(Modifier.height(22.dp))
 
-        when (state) {
+        when (uiState) {
             is PhoneAuthState.Loading -> CircularProgressIndicator()
-            is PhoneAuthState.Success -> {
-                val user = (state as PhoneAuthState.Success).user
-                onNavigate.invoke()
-            }
+            is PhoneAuthState.Verified -> onNavigate.invoke()
             is PhoneAuthState.Error -> {
-                Text("Error: ${(state as PhoneAuthState.Error).message}")
+                Text("Error: ${(uiState as PhoneAuthState.Error).message}")
             }
+
             else -> {}
         }
     }
