@@ -2,6 +2,7 @@ package com.amar.chat.main_feature.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Surface
@@ -42,9 +43,7 @@ class MainActivity : ComponentActivity() {
 
                         composable(route = Routes.RegisterScreen.route) {
                             RegisterScreen { verificationId ->
-                                navController.navigate("${Routes.OtpVerificationScreen.route}/${verificationId}") {
-                                    popUpTo(route = Routes.RegisterScreen.route) { inclusive = true }
-                                }
+                                navController.navigate("${Routes.OtpVerificationScreen.route}/${verificationId}")
                             }
                         }
 
@@ -65,7 +64,10 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = Routes.HomeScreen.route) {
-                            HomeScreen() {
+                            BackHandler {
+                                finish()
+                            }
+                            HomeScreen {
                                 navController.navigate("${Routes.ChatScreen.route}/${it}")
                             }
                         }
