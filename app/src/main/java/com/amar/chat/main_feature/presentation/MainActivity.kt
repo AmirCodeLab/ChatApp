@@ -67,17 +67,20 @@ class MainActivity : ComponentActivity() {
                             BackHandler {
                                 finish()
                             }
-                            HomeScreen {
-                                navController.navigate("${Routes.ChatScreen.route}/${it}")
+                            HomeScreen { chatId, otherUserId ->
+                                navController.navigate("${Routes.ChatScreen.route}/${chatId}/${otherUserId}")
                             }
                         }
 
                         composable(
-                            route = "${Routes.ChatScreen.route}/{phoneNumber}",
-                            arguments = listOf(navArgument("phoneNumber") { type = NavType.StringType })
+                            route = "${Routes.ChatScreen.route}/{chatId}/{otherUserId}",
+                            arguments = listOf(
+                                navArgument("chatId") { type = NavType.StringType },
+                                navArgument("otherUserId") { type = NavType.StringType })
                         ) {
-                            val phoneNumber = it.arguments?.getString("phoneNumber") ?: ""
-                            ChatScreen(phoneNumber = phoneNumber)
+                            val chatId = it.arguments?.getString("chatId") ?: ""
+                            val otherUserId = it.arguments?.getString("otherUserId") ?: ""
+                            ChatScreen(chatId, otherUserId)
                         }
 
                         composable(route = Routes.UpdateScreen.route) {
