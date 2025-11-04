@@ -1,12 +1,13 @@
 package com.amar.chat.main_feature.presentation.home_screen
 
-import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,44 +15,36 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.amar.chat.R
-import com.amar.chat.main_feature.domain.entities.ItemChatList
 import com.amar.chat.main_feature.presentation._common.FloatingButton
-import com.amar.chat.main_feature.presentation._view_model.BaseViewModel
+import com.amar.chat.main_feature.presentation._view_model.HomeViewModel
 import com.amar.chat.main_feature.presentation.chat_screen.components.AddContactDialog
 import com.amar.chat.main_feature.presentation.home_screen.components.BottomNavigation
 import com.amar.chat.main_feature.presentation.home_screen.components.HomeChatItem
 import com.amar.chat.main_feature.presentation.home_screen.components.HomeHeader
 import com.amar.chat.ui.theme.LightGray
-import com.google.firebase.auth.FirebaseAuth
+import com.amar.chat.utils.Utils
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 @Preview(showSystemUi = true)
 fun HomeScreen(
-    baseViewModel: BaseViewModel = koinViewModel(),
-    onNavigate: (String) -> Unit = {}
+    onNavigate: (chatId: String, otherUserId: String) -> Unit = { _, _ -> },
 ) {
 
-    var showPopup by remember { mutableStateOf(false) }
-    val showMenu = remember { mutableStateOf(false) }
-
-    val chatData by baseViewModel.chatList.collectAsState()
-    val userId = FirebaseAuth.getInstance().currentUser?.uid
-
-    if (userId != null) {
-        LaunchedEffect(Unit) {
-            baseViewModel.getChatForUser(userId) { chatList ->
-
-            }
-        }
-    }
-
+    val viewModel: HomeViewModel = koinViewModel()
     val context = LocalContext.current
+    var showPopup by remember { mutableStateOf(false) }
+
+    val chatList by viewModel.chatList.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.observeChatList()
+    }
 
     Scaffold(
         floatingActionButton = { FloatingButton { showPopup = true } },
@@ -69,54 +62,48 @@ fun HomeScreen(
                 color = LightGray
             )
 
-            if (showPopup) {
-                AddContactDialog(
-                    onAdd = { number ->
-                        baseViewModel.searchUserByPhoneNumber(number) { user ->
-                            showPopup = false
-                            if (user != null) {
-                                baseViewModel.addChat(user)
-                                Toast.makeText(context, "User added to chat", Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
-                            }
+            if (chatList.isEmpty()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 14.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text("No chats yet.")
+                    Text("Add a contact to start chatting.")
+                }
+            } else {
+                LazyColumn(
+                    Modifier.fillMaxSize()
+                ) {
+                    items(chatList.size) { index ->
+                        val chat = chatList[index]
+                        HomeChatItem(chat = chat) {
+                            onNavigate.invoke(chat.chatId, chat.otherUserId)
                         }
-                    }
-                )
-            }
-
-            LazyColumn {
-                items(chatData) { item ->
-                    HomeChatItem(baseViewModel = baseViewModel, chat = item) { chatItem ->
-                        chatItem.phoneNumber?.let { onNavigate(chatItem.phoneNumber) }
                     }
                 }
             }
+        }
 
+        if (showPopup) {
+            AddContactDialog(
+                onDismiss = {
+                    showPopup = false
+                },
+                onAdd = { number ->
+                    showPopup = false
+                    viewModel.addContact(number) { isSuccess, error ->
+                        if (isSuccess) {
+                            Utils.showToast(context, "Added successfully")
+                        } else {
+                            Utils.showToast(context, error ?: "Something went wrong")
+                        }
+                    }
+                }
+            )
         }
     }
 
-}
-
-private fun getChatData(): List<ItemChatList> {
-    return listOf(
-        ItemChatList(
-            image = R.drawable.img_male,
-            name = "Amr khn",
-            time = "10:00 AM",
-            message = "How are you"
-        ),
-        ItemChatList(
-            image = R.drawable.img_female,
-            name = "Amr khn",
-            time = "12:00 AM",
-            message = "What are you doing"
-        ),
-        ItemChatList(
-            image = R.drawable.img_male,
-            name = "Amr khn",
-            time = "01:00 AM",
-            message = "where are you bro"
-        )
-    )
 }

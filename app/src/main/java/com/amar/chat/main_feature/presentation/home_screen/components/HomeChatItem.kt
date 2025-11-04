@@ -28,17 +28,16 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.amar.chat.R
 import com.amar.chat.main_feature.domain.entities.ItemChatList
-import com.amar.chat.main_feature.presentation._view_model.BaseViewModel
+import com.amar.chat.utils.Utils
 
 @Composable
 @Preview(showBackground = true)
 private fun PreviewHomeChatItem() {
     /*HomeChatItem(
         chat = ItemChatList(
-            image = R.drawable.img_male,
-            name = "Amr Khn",
-            time = "10:00 AM",
-            message = "How are you?"
+            otherUserName = "amr",
+            lastMessage = "hello",
+            lastTimestamp = 123456
         )
     ) { }*/
 }
@@ -46,14 +45,9 @@ private fun PreviewHomeChatItem() {
 @Composable
 fun HomeChatItem(
     modifier: Modifier = Modifier,
-    baseViewModel: BaseViewModel,
     chat: ItemChatList,
     onClick: (ItemChatList) -> Unit,
 ) {
-
-    val image = chat.profileImage?.let {
-        baseViewModel.base64ToBitmap(it)
-    }
 
     Box(
         modifier = modifier
@@ -66,16 +60,11 @@ fun HomeChatItem(
                 .padding(horizontal = 14.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             Image(
                 modifier = Modifier
                     .size(54.dp)
                     .clip(CircleShape),
-                painter = if (image != null) {
-                    rememberAsyncImagePainter(image)
-                } else {
-                    painterResource(id = R.drawable.img_male)
-                },
+                painter = painterResource(id = R.drawable.img_male),
                 contentDescription = "",
                 contentScale = ContentScale.Crop
             )
@@ -88,13 +77,13 @@ fun HomeChatItem(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = chat.name ?: "Unknown",
+                        text = chat.otherUserName,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                     )
 
                     Text(
-                        text = chat.time?:"-- --",
+                        text = Utils.toChatTime(chat.lastTimestamp),
                         fontSize = 14.sp,
                     )
                 }
@@ -102,7 +91,7 @@ fun HomeChatItem(
                 Spacer(Modifier.height(2.dp))
 
                 Text(
-                    text = chat.message ?: "message",
+                    text = chat.lastMessage.ifEmpty { "Last Message" },
                     fontSize = 14.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
