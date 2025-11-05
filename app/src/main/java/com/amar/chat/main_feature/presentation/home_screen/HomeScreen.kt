@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.amar.chat.main_feature.presentation._common.FloatingButton
 import com.amar.chat.main_feature.presentation._view_model.HomeViewModel
-import com.amar.chat.main_feature.presentation.chat_screen.components.AddContactDialog
+import com.amar.chat.main_feature.presentation.home_screen.components.AddContactDialog
 import com.amar.chat.main_feature.presentation.home_screen.components.BottomNavigation
 import com.amar.chat.main_feature.presentation.home_screen.components.HomeChatItem
 import com.amar.chat.main_feature.presentation.home_screen.components.HomeHeader
