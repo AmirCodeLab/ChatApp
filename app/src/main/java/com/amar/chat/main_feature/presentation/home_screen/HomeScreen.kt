@@ -33,7 +33,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 @Preview(showSystemUi = true)
 fun HomeScreen(
-    onNavigate: (chatId: String, otherUserId: String) -> Unit = { _, _ -> },
+    onNavigate: (chatId: String, chatPersonName: String) -> Unit = { _, _ -> },
 ) {
 
     val viewModel: HomeViewModel = koinViewModel()
@@ -80,7 +80,7 @@ fun HomeScreen(
                     items(chatList.size) { index ->
                         val chat = chatList[index]
                         HomeChatItem(chat = chat) {
-                            onNavigate.invoke(chat.chatId, chat.otherUserId)
+                            onNavigate.invoke(chat.chatId, chat.otherUserName)
                         }
                     }
                 }
